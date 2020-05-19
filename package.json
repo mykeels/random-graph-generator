@@ -4,12 +4,20 @@
   "description": "A utility functon that generates a graph around supplied nodes, given parameters like `maxDepth`, `maxWidth` and `nodeCount`. 🤞",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest test --colors",
+    "test:watch": "npm test -- -w"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "graph",
+    "random",
+    "generator"
+  ],
+  "author": "mykeels",
+  "license": "MIT",
   "dependencies": {
     "graph-data-structure": "^1.12.0"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1"
   }
 }

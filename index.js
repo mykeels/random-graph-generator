@@ -8,7 +8,7 @@ const Graph = require('graph-data-structure');
  */
 function generateRandomGraph(nodes, { maxWidth, edgeProbability }) {
     if (!Math.floor(maxWidth)) throw new Error('[maxWidth] must be a positive integer');
-    if (Number.isNaN(edgeProbability) || edgeProbability <= 0) throw new Error('[edgeProbability] must be a positive float');
+    if (!edgeProbability || Number(edgeProbability) <= 0) throw new Error('[edgeProbability] must be a positive float');
 
     const graph = Graph();
 
