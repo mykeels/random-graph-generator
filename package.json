@@ -1,6 +1,6 @@
 {
   "name": "random-graph-generator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A utility functon that generates a graph around supplied nodes, given parameters like `maxDepth`, `maxWidth` and `nodeCount`. 🤞",
   "main": "index.js",
   "scripts": {
