@@ -3,6 +3,7 @@ const { generateRandomGraph } = require("./index");
 const NODES = 5000;
 const maxWidth = 5;
 const edgeProbability = 0.3;
+const NO_OF_BRIDGES = 10;
 
 const CHUNKS = 500;
 const graphs = [];
@@ -18,24 +19,38 @@ while (remainingNodes > 0) {
       edgeProbability,
     }
   );
-  graphs.push(graph);
+  graphs.push(graph.serialize());
   remainingNodes -= CHUNKS;
 }
 
-const graph = { nodes: [], links: [] }
+for (let i = 0; i < graphs.length; i++) {
+  const g1 = graphs[i];
+  for (let j = 0; j < graphs.length; j++) {
+    if (j == i) continue;
+    const g2 = graphs[j];
 
-graphs.forEach(g => {
-  const s = g.serialize();
-  if (graph.nodes.length) {
-    graph.links.push({
-      source: graph.nodes[0].id,
-      target: s.nodes[0].id,
-      weight: 1
-    });
+    let connectedBridges = Math.floor(NO_OF_BRIDGES / graphs.length);
+    while (connectedBridges > 0) {
+      let g1Index = Math.floor(Math.random() * g1.nodes.length - 1) + 1;
+      let g2Index = Math.floor(Math.random() * g1.nodes.length - 1) + 1;
+
+      if (g1Index != g2Index) {
+        g1.links.push({
+          source: g1.nodes[g1Index].id,
+          target: g2.nodes[g2Index].id,
+          weight: 1
+        });
+        connectedBridges--;
+        // console.log(`graph(${i}, ${g1Index}), graph(${j}, ${g2Index})`);
+      }
+    }
   }
-  graph.nodes = graph.nodes.concat(s.nodes);
-  graph.links = graph.links.concat(s.links);
-});
+}
+
+const graph = {
+  nodes: graphs.reduce((arr, g) => arr.concat(...g.nodes), []),
+  links: graphs.reduce((arr, g) => arr.concat(...g.links), []),
+}
 
 console.log(
   JSON.stringify(
